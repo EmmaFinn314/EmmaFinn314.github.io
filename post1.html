@@ -38,17 +38,28 @@
       July 2025 • Emma Finn
     </div>
 
-    <!-- TL;DR -->
+      <figure class="max-w-2xl mx-auto">
+    <img
+      src="figure1post1.jpg"
+      alt="Pam from The Office saying Gram–Schmidt and Variance Decomposition Sobol's Method are the same picture"
+      loading="lazy"
+      class="w-full rounded shadow"
+    />
+    <figcaption class="mt-2 text-center text-sm text-gray-600">
+      <span class="font-semibold">Figure&nbsp;1.</span>
+      Gram–Schmidt vs. Sobol’s method: corporate can’t tell the difference.
+    </figcaption>
+  </figure>
+</section>
+
+    <!-- What is Sobol's Method  -->
     <section id="tldr" class="mb-10">
       <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
       <p>
-        We have a model $f:\mathbb{R}^n \to \mathbb{R}$ defined on an $n$‑dimensional box. We decompose $f$
-        into orthogonal components—single–variable effects, pairwise interactions, etc.—exactly like an
-        ANOVA/Sobol/HDMR expansion. Each component is obtained by projecting $f$ onto the subspace of
-        functions depending only on a specified subset of inputs. This mirrors the Gram–Schmidt process in
-        the Hilbert space $L_2$, where conditional expectations play the role of orthogonal projections. In the end,
-        the variance of $Y=f(X)$ splits into uncorrelated pieces attributable to individual variables and their
-        interactions.
+        Suppose we have a model $f:\mathbb{R}^n \to \mathbb{R}$ that takes a vector of $n$ inputs. You might imagine our model
+        is a classifier that operates on MNIST and outputs the probability that the image is an $8$. It takes in a vector of inputs corresponding to patches in a black-and-white image of 
+        a hand-drawn digit. A natural question is what percentage of the variance in the probability of an image being an eight can be
+        attributed to a particular patch. This is the question that Sobol's method answers.
       </p>
     </section>
 
@@ -56,6 +67,14 @@
     <section id="setup" class="mb-10 space-y-4">
       <h2 class="text-xl font-semibold mb-3">1. The Setup</h2>
       <p>
+       We assume that our inputs are independent and distributed uniformly at random. 
+        Without loss of generality, let's assume that our inputs live on the $ n$-dimensional hypercube.
+       We decompose $f$ into orthogonal components—single–variable effects, pairwise interactions. 
+      Each component is obtained by projecting $f$ onto the subspace of
+      interaction functions depending only on a specified subset of inputs. 
+        This mirrors the Gram–Schmidt process in
+        the Hilbert space $L_2$, where conditional expectations play the role of orthogonal projections. In the end,
+        the variance of $Y=f(X)$ splits into uncorrelated pieces attributable to individual variables and their
         Let $X=(X_1,\dots,X_n)$ be inputs and $Y=f(X)$ the scalar output. Assume $f\in L_2$, i.e.,
         $\int f^2(x)\,dx &lt; \infty$, so we can work in the Hilbert space
         $L_2$ with inner product $\langle U,V\rangle = \mathbb{E}[UV]$.
