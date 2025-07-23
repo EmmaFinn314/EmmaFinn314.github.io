@@ -1,122 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Conditional Expectation is Just Projection! – Emma Finn</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
-/>
-<!-- KaTeX JS -->
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
-  integrity="sha384-vZTG+g+9gka3rO+8KVaqkiB3m17At3LH5r3g/7GQM7G5UHZMpLQ2Hns+KExl+gwR"
-  crossorigin="anonymous"
-></script>
-<!-- Auto‑render extension -->
-<script
-  defer
-  src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
-  integrity="sha384-mll67QQ5IyJ8+LYMxYGiJZo6PT/QzHWf/VAZ7h+qUiwp6Ced+Y6v5P7rW+XPKd+L"
-  crossorigin="anonymous"
-  onload="renderMathInElement(document.body, {
-    // delimiters for inline and display math:
-    delimiters: [
-      { left: '$$', right: '$$', display: true },
-      { left: '\\(', right: '\\)', display: false }
-    ],
-    throwOnError: false
-  });"
-></script>
-  
-  </head>
-  <body class="bg-gray-50 text-gray-800 leading-relaxed">
-    <header class="bg-white shadow">
-      <div class="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="index.html" class="text-xl font-semibold text-blue-600 hover:underline">
-          ← Back to Blog
-        </a>
-        <h1 class="text-2xl font-bold">Conditional Expectation is Just Projection!</h1>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <title>Conditional Expectation is Just Projection! – Emma Finn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <main class="container mx-auto px-4 py-8">
-      <!-- Meta -->
-      <div class="text-gray-600 text-sm italic mb-8">
-        July 2025 • Emma Finn
-      </div>
+  <!-- Tailwind (optional if you already include it globally) -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css" rel="stylesheet" />
 
-      <!-- Introduction -->
-      <section id="introduction" class="mb-8">
-        <h2 class="text-xl font-semibold mb-3">Introduction</h2>
-        <p class="mb-4">
-          <!-- Your intro goes here: set up the problem, motivation, and a quick roadmap of the post. -->
-        </p>
-      </section>
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{
+      delimiters:[
+        {left:'$$', right:'$$', display:true},
+        {left:'$', right:'$', display:false},
+        {left:'\\(', right:'\\)', display:false},
+        {left:'\\[', right:'\\]', display:true}
+      ],
+      throwOnError:false
+    });"
+  ></script>
+</head>
+<body class="bg-gray-50 text-gray-800 leading-relaxed">
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-blue-600 hover:underline">← Back to Blog</a>
+      <h1 class="text-2xl font-bold">Conditional Expectation is Just Projection!</h1>
+    </div>
+  </header>
 
-      <!-- Manim Animation -->
-      <section id="animation" class="mb-8">
-        <h2 class="text-xl font-semibold mb-3">Visualizing the Projection</h2>
-        <!-- Replace with your exported video or inline Manim magic -->
-        <video
-          controls
-          autoplay
-          loop
-          muted
-          class="w-full rounded shadow"
-        >
-          <source src="/media/videos/ConditionalExpectation.webm" type="video/webm" />
-          <!-- Fallback text -->
-          Your browser doesn’t support embedded videos.
-        </video>
-      </section>
+  <main class="container mx-auto px-4 py-8">
+    <div class="text-gray-600 text-sm italic mb-8">
+      July 2025 • Emma Finn
+    </div>
 
-      <!-- Main Content -->
-      <section id="content" class="space-y-6 mb-8">
-        <h2 class="text-xl font-semibold">1. Sobol’s Method Recap</h2>
-        <p>
-          <!-- Explain Sobol’s method and its geometric interpretation. -->
-        </p>
+    <!-- TL;DR -->
+    <section id="tldr" class="mb-10">
+      <h2 class="text-xl font-semibold mb-3">TL;DR</h2>
+      <p>
+        We have a model $f:\mathbb{R}^n \to \mathbb{R}$ defined on an $n$‑dimensional box. We decompose $f$
+        into orthogonal components—single–variable effects, pairwise interactions, etc.—exactly like an
+        ANOVA/Sobol/HDMR expansion. Each component is obtained by projecting $f$ onto the subspace of
+        functions depending only on a specified subset of inputs. This mirrors the Gram–Schmidt process in
+        the Hilbert space $L_2$, where conditional expectations play the role of orthogonal projections. In the end,
+        the variance of $Y=f(X)$ splits into uncorrelated pieces attributable to individual variables and their
+        interactions.
+      </p>
+    </section>
 
-        <h2 class="text-xl font-semibold">2. Graham–Schmidt & Projection</h2>
-        <p>
-          <!-- Show how Gram–Schmidt is a projection in Hilbert space. -->
-        </p>
+    <!-- Body -->
+    <section id="setup" class="mb-10 space-y-4">
+      <h2 class="text-xl font-semibold mb-3">1. The Setup</h2>
+      <p>
+        Let $X=(X_1,\dots,X_n)$ be inputs and $Y=f(X)$ the scalar output. Assume $f\in L_2$, i.e.,
+        $\int f^2(x)\,dx &lt; \infty$, so we can work in the Hilbert space
+        $L_2$ with inner product $\langle U,V\rangle = \mathbb{E}[UV]$.
+      </p>
+      <p>
+        We expand $f$ as a sum of orthogonal components:
+      </p>
+      <p class="overflow-x-auto">
+        $$f(X_1,\dots,X_n) = f_0 + \sum_{i=1}^n f_i(X_i) + \sum_{i&lt;j} f_{ij}(X_i,X_j)
+        + \sum_{i&lt;j&lt;k} f_{ijk}(X_i,X_j,X_k) + \cdots + f_{1\,2\,\dots n}(X_1,\dots,X_n).$$
+      </p>
+    </section>
 
-        <h2 class="text-xl font-semibold">3. Putting It Together</h2>
-        <p>
-          <!-- Tie the two threads together to see why conditional expectation = projection. -->
-        </p>
-      </section>
+    <section id="components" class="mb-10 space-y-4">
+      <h2 class="text-xl font-semibold mb-3">2. How We Get the Components</h2>
+      <p>
+        Start with the mean term:
+      </p>
+      <p class="overflow-x-auto">$$f_0 = \mathbb{E}[Y].$$</p>
 
-      <!-- Conclusion -->
-      <section id="conclusion" class="mb-8">
-        <h2 class="text-xl font-semibold mb-3">Conclusion</h2>
-        <p>
-          <!-- Summarize insights, implications for further reading or applications. -->
-        </p>
-      </section>
+      <p>
+        The first–order (main effect) component for $X_i$ is
+      </p>
+      <p class="overflow-x-auto">
+        $$f_i(X_i) = \mathbb{E}[Y\mid X_i] - f_0.$$
+      </p>
 
-      <!-- References / Further Reading -->
-      <section id="references" class="border-t pt-4 text-sm text-gray-600">
-        <h2 class="font-semibold mb-2">References & Further Reading</h2>
-        <ul class="list-disc list-inside space-y-1">
-          <li><a href="#" class="text-blue-600 hover:underline">Sobol’s Original Paper</a></li>
-          <li><a href="#" class="text-blue-600 hover:underline">Gram–Schmidt Orthogonalization</a></li>
-          <li><a href="#" class="text-blue-600 hover:underline">Hilbert Spaces & Projections</a></li>
-        </ul>
-      </section>
-    </main>
+      <p>
+        The second–order interaction between $X_i$ and $X_j$ is
+      </p>
+      <p class="overflow-x-auto">
+        $$f_{ij}(X_i,X_j) =
+          \mathbb{E}[Y\mid X_i,X_j]
+          - f_i(X_i) - f_j(X_j) - f_0.$$
+      </p>
 
-    <footer class="bg-white border-t">
-      <div class="container mx-auto px-4 py-4 text-center text-gray-600 text-sm">
-        © 2025 Emma Finn. All rights reserved.
-      </div>
-    </footer>
-  </body>
+      <p>
+        And so on: each higher‑order term subtracts all lower‑order pieces so that every component has
+        mean zero and is orthogonal to all lower‑order components. (By the law of total expectation—often
+        jokingly called “Adam’s law”—each $f_{S}$, for $S\subseteq\{1,\dots,n\}$ with $|S|\ge 1$, satisfies
+        $\mathbb{E}[f_S]=0$.)
+      </p>
+    </section>
+
+    <section id="projection" class="mb-10 space-y-4">
+      <h2 class="text-xl font-semibold mb-3">3. Conditional Expectation as Projection</h2>
+      <p>
+        Think of all functions of $X_i$ as a subspace of $L_2$. The conditional expectation $\mathbb{E}[Y\mid X_i]$
+        is the orthogonal projection of $Y$ onto that subspace. Therefore
+      </p>
+      <p class="overflow-x-auto">
+        $$f_i = \mathbb{E}[Y\mid X_i] - \mathbb{E}[Y]$$
+      </p>
+      <p>
+        is orthogonal to the constant subspace (spanned by $f_0$). This is directly analogous to the
+        Gram–Schmidt process: each time we subtract projections onto already–constructed orthogonal components,
+        producing a new piece that is orthogonal to all previous ones. The sum of all components still equals
+        $f(X)$ exactly—no information is lost.
+      </p>
+    </section>
+
+    <section id="variance" class="mb-10 space-y-4">
+      <h2 class="text-xl font-semibold mb-3">4. Decomposing the Variance</h2>
+      <p>
+        Orthogonality implies uncorrelatedness. Squaring and integrating (i.e., taking $L_2$ norms),
+        we obtain a variance decomposition. Write the index set of inputs as $[n]=\{1,\dots,n\}$ and let
+        $S\subseteq [n]$ denote a subset. Then
+      </p>
+      <p class="overflow-x-auto">
+        $$\operatorname{Var}(Y) = \sum_{\emptyset \neq S \subseteq [n]} V_S,$$
+      </p>
+      <p>
+        where, for singletons,
+      </p>
+      <p class="overflow-x-auto">
+        $$V_i = \operatorname{Var}_{X_i}\big( \mathbb{E}[Y \mid X_i] \big),$$
+      </p>
+      <p>
+        and for pairs,
+      </p>
+      <p class="overflow-x-auto">
+        $$V_{ij} = \operatorname{Var}_{X_i,X_j}\big( \mathbb{E}[Y \mid X_i, X_j] \big) - V_i - V_j,$$
+      </p>
+      <p>
+        and, in general,
+      </p>
+      <p class="overflow-x-auto">
+        $$V_S = \operatorname{Var}_{X_S}\big( \mathbb{E}[Y \mid X_S] \big) - \sum_{T \subsetneq S} V_T.$$
+      </p>
+      <p>
+        Equivalently, because the $f_S$’s are orthogonal,
+      </p>
+      <p class="overflow-x-auto">
+        $$\operatorname{Var}(Y) = \sum_{\emptyset\neq S\subseteq [n]} \|f_S\|_{L_2}^2
+          = \sum_{s=1}^n \sum_{i_1&lt;\cdots&lt;i_s} \int f_{i_1\cdots i_s}^2(x_{i_1},\dots,x_{i_s})\,dx_{i_1}\cdots dx_{i_s}.$$
+      </p>
+      <p>
+        This gives a clean way to attribute the total variance of the model to individual inputs and their
+        interactions. Pretty amazing!
+      </p>
+    </section>
+
+    <!-- (Optional) Manim animation slot -->
+    <section id="animation" class="mb-12">
+      <h2 class="text-xl font-semibold mb-3">Visualizing the Projections</h2>
+      <video controls loop muted class="w-full rounded shadow">
+        <source src="/media/videos/ProjectionDemo.webm" type="video/webm" />
+        Your browser does not support embedded videos.
+      </video>
+    </section>
+
+    <section id="references" class="border-t pt-6 text-sm text-gray-600">
+      <h2 class="font-semibold mb-2">References &amp; Further Reading</h2>
+      <ul class="list-disc list-inside space-y-1">
+        <li>Sobol, I. M. (1993). Sensitivity estimates for nonlinear mathematical models.</li>
+        <li>Saltelli et al. (2008). <em>Global Sensitivity Analysis: The Primer</em>.</li>
+        <li>Any standard text on $L_2$ spaces, conditional expectation, and Gram–Schmidt.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="bg-white border-t">
+    <div class="container mx-auto px-4 py-4 text-center text-gray-600 text-sm">
+      © 2025 Emma Finn. All rights reserved.
+    </div>
+  </footer>
+</body>
 </html>
