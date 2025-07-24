@@ -158,9 +158,14 @@
         Equivalently, because the $f_S$’s are orthogonal,
       </p>
       <p class="overflow-x-auto">
-        $$\operatorname{Var}(Y) = \sum_{\emptyset\neq S\subseteq [n]} \|f_S\|_{L_2}^2
-          = \sum_{s=1}^n \sum_{i_1&lt;\cdots&lt;i_s} \int f_{i_1\cdots i_s}^2(x_{i_1},\dots,x_{i_s})\,dx_{i_1}\cdots dx_{i_s}.$$
-      </p>
+        $$
+\operatorname{Var}(Y)
+= \sum_{\emptyset\neq S\subseteq [n]} \|f_S\|_{L^2}^2
+= \sum_{s=1}^n \sum_{i_1<\cdots<i_s}
+    \int f_{i_1\cdots i_s}^2(x_{i_1},\dots,x_{i_s})\,dx_{i_1}\cdots dx_{i_s}
+= \sum_{i=1}^{d} V_i + \sum_{i<j}^{d} V_{ij} + \cdots + V_{12\cdots d}.
+$$
+
       <p>
         This gives a clean way to attribute the total variance of the model to individual inputs and their
         interactions. Pretty amazing!
