@@ -2,25 +2,69 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Algebra, Probability, and Representations – Emma Finn</title>
+    <title> Score and Structure - my informal talks and writings</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.17/dist/tailwind.min.css" rel="stylesheet" />
   </head>
-  <body class="bg-gray-50">
-    <div class="container mx-auto px-4 py-8">
-      <h1 class="text-3xl font-bold mb-4">Blog</h1>
+  <body class="bg-gray-50 flex flex-col min-h-screen">
+    <div class="container mx-auto px-4 py-8 flex-grow">
+      <h1 class="text-3xl font-bold mb-4">Talks & Writing</h1>
 
       <div class="space-y-6">
+        <!-- Upcoming Talk -->
+        <div class="bg-white p-6 rounded-lg shadow border-l-4 border-yellow-400">
+          <h2 class="text-xl font-semibold">Wavelets and Diffusion Models</h2>
+          <p class="text-gray-600 mb-2 text-sm italic">Kempner Lunch & Learn – Upcoming (Fall 2025)</p>
+          <p class="text-gray-700">
+            An exploration of wavelet-based representations of the diffusion score, connecting multiscale structure to the analytic theory of generative models.
+          </p>
+          <p class="text-gray-500 text-sm italic">Slides coming soon</p>
+        </div>
+
+        <!-- Recent Talks -->
         <div class="bg-white p-6 rounded-lg shadow">
-          <h2 class="text-xl font-semibold">Conditional Expecation is Just Projection!</h2>
+          <h2 class="text-xl font-semibold">Intro to Creativity in Diffusion</h2>
+          <p class="text-gray-600 mb-2 text-sm italic">Kempner Lunch & Learn – Summer 2025</p>
+          <p class="text-gray-700">
+            A conceptual introduction to creativity in diffusion models, exploring how stochastic and geometric structure can yield novel and interpretable outputs.
+          </p>
+          <a href="https://github.com/LunchAndLearnKempner/lunchandlearnKempner.github.io/blob/main/Intro%20to%20Creativity%20in%20Diffusion%20Models%20(2).pdf" target="_blank" class="text-blue-600 hover:underline">View slides →</a>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold">Intro to Diffusion</h2>
+          <p class="text-gray-600 mb-2 text-sm italic">Kempner Lunch & Learn – Spring 2025</p>
+          <p class="text-gray-700">
+            A foundational walkthrough of diffusion models — covering forward and reverse processes, score estimation, and links to variational inference.
+          </p>
+          <a href="https://github.com/LunchAndLearnKempner/lunchandlearnKempner.github.io/blob/main/Intro%20to%20Diffusion%20Models.pdf" target="_blank" class="text-blue-600 hover:underline">View slides →</a>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold">Equivariant Neural Networks</h2>
+          <p class="text-gray-600 mb-2 text-sm italic">Kempner Lunch & Learn – Fall 2024</p>
+          <p class="text-gray-700">
+            An introduction to group-equivariant neural networks, focusing on symmetry, representation theory, and applications in physics and generative modeling.
+          </p>
+          <a href="https://github.com/LunchAndLearnKempner/lunchandlearnKempner.github.io/blob/main/Introduction%20to%20Group%20Equivariant%20Neural%20Networks!.pdf" target="_blank" class="text-blue-600 hover:underline">View slides →</a>
+        </div>
+
+        <!-- Blog post -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold">Conditional Expectation is Just Projection!</h2>
           <p class="text-gray-600 mb-2 text-sm italic">July 2025</p>
           <p class="text-gray-700">
-            A post exploring the connection between Sobol's method and the Graham-Schmidt method!
+            A post exploring the connection between Sobol's method and the Gram-Schmidt method!
           </p>
           <a href="post1.html" class="text-blue-600 hover:underline">Read more →</a>
         </div>
-
-        <!-- Add more blog previews here -->
       </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 text-center py-4 mt-8 border-t border-gray-200">
+      <p class="text-gray-500 text-sm max-w-2xl mx-auto px-4">
+        <em>Note:</em> These Lunch & Learn notes are shared in their draft form. They were prepared as informal teaching materials and may contain incomplete explanations, notation inconsistencies, informal citations, or preliminary ideas under active development.
+      </p>
+    </footer>
   </body>
 </html>
